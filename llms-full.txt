@@ -1,0 +1,30 @@
+# rogersac GitHub Projects
+
+> GitHub Pages landing page for rogersac's public repositories, software experiments, and active work.
+
+This site lives at https://rogersac.github.io/ and serves as a lightweight directory to the owner's public GitHub presence.
+
+## Summary
+
+- Owner: rogersac
+- Homepage: https://rogersac.github.io/
+- GitHub profile: https://github.com/rogersac
+- Public repositories: https://github.com/rogersac?tab=repositories
+
+## What this site contains
+
+- A human-facing landing page with a profile summary and links to public repositories.
+- Search-engine discovery files including `robots.txt` and `sitemap.xml`.
+- A Google Search Console ownership verification file at `/googleb402e994c33f8edf.html`.
+- An LLM discovery file at `/llms.txt`.
+
+## Source of truth
+
+The homepage renders live public repository data from the GitHub REST API. For the freshest list of repositories, the GitHub repositories page is the best source of truth.
+
+## Important links
+
+- [Homepage](https://rogersac.github.io/)
+- [GitHub profile](https://github.com/rogersac)
+- [Public repositories](https://github.com/rogersac?tab=repositories)
+- [Repository README](https://github.com/rogersac/rogersac.github.io/blob/main/README.md)

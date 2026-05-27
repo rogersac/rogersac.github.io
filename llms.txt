@@ -1,0 +1,18 @@
+# rogersac GitHub Projects
+
+> GitHub Pages landing page for rogersac's public repositories, software experiments, and active work.
+
+This site is a lightweight directory to the owner's public GitHub profile and repositories. The homepage loads current profile and repository data from the public GitHub REST API.
+
+## Docs
+
+- [Homepage](https://rogersac.github.io/): Human-facing landing page with live repository data.
+- [Full LLM summary](https://rogersac.github.io/llms-full.txt): Plain-text summary of the site, ownership, and canonical links.
+- [GitHub profile](https://github.com/rogersac): Public GitHub profile.
+- [Public repositories](https://github.com/rogersac?tab=repositories): Current public repository listing.
+
+## Optional
+
+- [Repository README](https://github.com/rogersac/rogersac.github.io/blob/main/README.md): Maintenance and deployment notes.
+- [Sitemap](https://rogersac.github.io/sitemap.xml): XML sitemap for search crawlers.
+- [Robots](https://rogersac.github.io/robots.txt): Crawl directives.
