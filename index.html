@@ -684,7 +684,7 @@
         ]);
 
         allRepos = repos
-          .filter((repo) => !repo.private)
+          .filter((repo) => !repo.private && repo.name !== "rogersac.github.io")
           .sort((a, b) => new Date(b.pushed_at || b.updated_at) - new Date(a.pushed_at || a.updated_at));
 
         renderProfile(profile);
