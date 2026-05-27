@@ -1,3 +1,711 @@
-<html><body>
-Hello, world!
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rogersac • GitHub Projects</title>
+  <meta
+    name="description"
+    content="A landing page for rogersac with links to public GitHub repositories."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;500;700&amp;display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      --bg: #f5efe4;
+      --bg-strong: #ead8b6;
+      --panel: rgba(255, 252, 245, 0.8);
+      --panel-strong: rgba(255, 249, 238, 0.92);
+      --text: #1f1b18;
+      --muted: #6a5d4e;
+      --border: rgba(31, 27, 24, 0.12);
+      --accent: #c55d2d;
+      --accent-strong: #8e3c16;
+      --accent-soft: rgba(197, 93, 45, 0.12);
+      --shadow: 0 24px 80px rgba(78, 47, 24, 0.16);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Space Grotesk", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.85), transparent 26%),
+        radial-gradient(circle at 85% 15%, rgba(197, 93, 45, 0.15), transparent 22%),
+        linear-gradient(140deg, var(--bg) 0%, #f2e6d1 45%, var(--bg-strong) 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(31, 27, 24, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 27, 24, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), transparent 85%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .page {
+      position: relative;
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 32px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, var(--panel-strong), rgba(255, 244, 226, 0.82));
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(197, 93, 45, 0.2), transparent 70%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(31, 27, 24, 0.08);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(197, 93, 45, 0.14);
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(260px, 0.9fr);
+      gap: 28px;
+      margin-top: 22px;
+      align-items: start;
+    }
+
+    .hero-copy h1 {
+      margin: 0;
+      max-width: 10ch;
+      font-size: clamp(3rem, 8vw, 5.8rem);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-copy p {
+      max-width: 58ch;
+      margin: 20px 0 0;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 500;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #fff8f0;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      box-shadow: 0 16px 40px rgba(142, 60, 22, 0.25);
+    }
+
+    .button-secondary {
+      border-color: rgba(31, 27, 24, 0.1);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .profile-panel {
+      padding: 20px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid rgba(31, 27, 24, 0.08);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .avatar {
+      width: 78px;
+      height: 78px;
+      border-radius: 22px;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 18px 40px rgba(78, 47, 24, 0.16);
+      object-fit: cover;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .profile-meta h2 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .profile-meta p {
+      margin: 4px 0 0;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .stat {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(197, 93, 45, 0.08);
+      border: 1px solid rgba(197, 93, 45, 0.1);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.15rem;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 4px;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin: 32px 0 18px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      letter-spacing: -0.04em;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 56ch;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .search {
+      flex: 1 1 240px;
+      min-height: 50px;
+      padding: 0 16px;
+      border: 1px solid rgba(31, 27, 24, 0.1);
+      border-radius: 16px;
+      font: inherit;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.7);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .search:focus {
+      outline: 2px solid rgba(197, 93, 45, 0.22);
+      outline-offset: 2px;
+    }
+
+    .repo-summary {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .repo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .repo-card,
+    .status-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(255, 252, 247, 0.74);
+      box-shadow: 0 18px 50px rgba(78, 47, 24, 0.09);
+      backdrop-filter: blur(18px);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .repo-card:hover,
+    .repo-card:focus-within {
+      transform: translateY(-4px);
+      border-color: rgba(197, 93, 45, 0.22);
+      box-shadow: 0 22px 54px rgba(78, 47, 24, 0.16);
+    }
+
+    .repo-card h4 {
+      margin: 0;
+      font-size: 1.15rem;
+      line-height: 1.2;
+    }
+
+    .repo-card h4 a {
+      text-decoration: underline;
+      text-decoration-thickness: 0.08em;
+      text-decoration-color: rgba(197, 93, 45, 0.24);
+      text-underline-offset: 0.16em;
+    }
+
+    .repo-description {
+      margin: 14px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .repo-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(31, 27, 24, 0.08);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .chip-language::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .repo-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    .status-card {
+      align-items: flex-start;
+      justify-content: center;
+      text-align: left;
+    }
+
+    .status-card strong {
+      font-size: 1.2rem;
+    }
+
+    .status-card p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .footer {
+      margin-top: 24px;
+      padding: 18px 4px 0;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 24px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 20px, 1120px);
+        padding-top: 20px;
+      }
+
+      .hero-copy h1 {
+        max-width: none;
+      }
+
+      .section-head {
+        align-items: start;
+      }
+    }
+  </style>
+</head>
+<body data-github-user="rogersac">
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <span class="eyebrow">GitHub Landing Page</span>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1 id="page-title">Projects worth clicking into.</h1>
+          <p>
+            This page pulls the latest public repositories from <strong id="hero-username">rogersac</strong>
+            and turns them into a fast directory for code, experiments, and active work.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" id="profile-link" href="https://github.com/rogersac" target="_blank" rel="noreferrer">
+              Open GitHub Profile
+            </a>
+          </div>
+        </div>
+
+        <aside class="profile-panel" aria-label="GitHub profile summary">
+          <div class="profile-header">
+            <img
+              class="avatar"
+              id="avatar"
+              src="https://avatars.githubusercontent.com/u/19674638?v=4"
+              alt="GitHub profile avatar for rogersac"
+            >
+            <div class="profile-meta">
+              <h2 id="profile-name">rogersac</h2>
+              <p id="profile-handle">@rogersac</p>
+            </div>
+          </div>
+          <div class="stats" id="stats">
+            <div class="stat">
+              <strong>...</strong>
+              <span>Public repos</span>
+            </div>
+            <div class="stat">
+              <strong>...</strong>
+              <span>Followers</span>
+            </div>
+            <div class="stat">
+              <strong>...</strong>
+              <span>On GitHub since</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="repositories" aria-labelledby="repo-title">
+      <div class="section-head">
+        <div>
+          <h3 id="repo-title">Public repositories</h3>
+          <p>
+            The list below is loaded live from the GitHub API, sorted by most recently pushed repository.
+          </p>
+        </div>
+        <div class="controls">
+          <input
+            id="repo-search"
+            class="search"
+            type="search"
+            placeholder="Filter by repo name, language, or description"
+            aria-label="Filter repositories"
+          >
+          <div class="repo-summary" id="repo-summary">Loading repositories...</div>
+        </div>
+      </div>
+
+      <div class="repo-grid" id="repo-grid" aria-live="polite">
+        <article class="status-card">
+          <strong>Loading repositories...</strong>
+          <p>Fetching the latest public projects from GitHub.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Built as a GitHub Pages landing page. Data source: GitHub public REST API.
+    </footer>
+  </main>
+
+  <script>
+    const username = document.body.dataset.githubUser;
+    const profileUrl = `https://api.github.com/users/${username}`;
+    const repoUrl = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
+
+    const elements = {
+      avatar: document.getElementById("avatar"),
+      heroUsername: document.getElementById("hero-username"),
+      profileLink: document.getElementById("profile-link"),
+      profileName: document.getElementById("profile-name"),
+      profileHandle: document.getElementById("profile-handle"),
+      stats: document.getElementById("stats"),
+      repoGrid: document.getElementById("repo-grid"),
+      repoSearch: document.getElementById("repo-search"),
+      repoSummary: document.getElementById("repo-summary")
+    };
+
+    let allRepos = [];
+
+    function formatJoinYear(isoDate) {
+      return new Date(isoDate).getFullYear();
+    }
+
+    function formatUpdatedDate(isoDate) {
+      return new Intl.DateTimeFormat("en", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      }).format(new Date(isoDate));
+    }
+
+    function pluralize(count, singular, plural = `${singular}s`) {
+      return `${count} ${count === 1 ? singular : plural}`;
+    }
+
+    function renderStats(profile) {
+      elements.stats.innerHTML = `
+        <div class="stat">
+          <strong>${profile.public_repos}</strong>
+          <span>Public repos</span>
+        </div>
+        <div class="stat">
+          <strong>${profile.followers}</strong>
+          <span>Followers</span>
+        </div>
+        <div class="stat">
+          <strong>${formatJoinYear(profile.created_at)}</strong>
+          <span>On GitHub since</span>
+        </div>
+      `;
+    }
+
+    function renderRepos(repos) {
+      if (!repos.length) {
+        elements.repoGrid.innerHTML = `
+          <article class="status-card">
+            <strong>No repositories match the current filter.</strong>
+            <p>Try a broader search term or clear the filter to see everything again.</p>
+          </article>
+        `;
+        return;
+      }
+
+      elements.repoGrid.innerHTML = repos.map((repo) => {
+        const description = repo.description || "No description provided.";
+        const homepageLink = repo.homepage
+          ? `<a class="link-pill" href="${repo.homepage}" target="_blank" rel="noreferrer">Open project site</a>`
+          : "";
+        const forkChip = repo.fork ? '<span class="chip">Fork</span>' : "";
+        const archivedChip = repo.archived ? '<span class="chip">Archived</span>' : "";
+        const languageChip = repo.language
+          ? `<span class="chip chip-language">${repo.language}</span>`
+          : "";
+
+        return `
+          <article class="repo-card">
+            <h4>
+              <a href="${repo.html_url}" target="_blank" rel="noreferrer">${repo.name}</a>
+            </h4>
+            <p class="repo-description">${description}</p>
+            <div class="repo-meta">
+              ${languageChip}
+              <span class="chip">Updated ${formatUpdatedDate(repo.pushed_at || repo.updated_at)}</span>
+              <span class="chip">${pluralize(repo.stargazers_count, "star")}</span>
+              ${forkChip}
+              ${archivedChip}
+            </div>
+            <div class="repo-links">
+              <a class="link-pill" href="${repo.html_url}" target="_blank" rel="noreferrer">View repository</a>
+              ${homepageLink}
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function updateRepoSummary(visibleCount) {
+      const totalCount = allRepos.length;
+      if (!totalCount) {
+        elements.repoSummary.textContent = "No repositories available";
+        return;
+      }
+
+      if (visibleCount === totalCount) {
+        elements.repoSummary.textContent = `Showing all ${pluralize(totalCount, "repository")}`;
+        return;
+      }
+
+      elements.repoSummary.textContent = `Showing ${visibleCount} of ${totalCount} repositories`;
+    }
+
+    function applyFilter() {
+      const query = elements.repoSearch.value.trim().toLowerCase();
+      const filteredRepos = allRepos.filter((repo) => {
+        const haystack = [
+          repo.name,
+          repo.description,
+          repo.language
+        ].filter(Boolean).join(" ").toLowerCase();
+
+        return haystack.includes(query);
+      });
+
+      renderRepos(filteredRepos);
+      updateRepoSummary(filteredRepos.length);
+    }
+
+    function renderProfile(profile) {
+      const displayName = profile.name || profile.login;
+      elements.heroUsername.textContent = profile.login;
+      elements.profileName.textContent = displayName;
+      elements.profileHandle.textContent = `@${profile.login}`;
+      elements.profileLink.href = profile.html_url;
+      elements.avatar.src = profile.avatar_url;
+      elements.avatar.alt = `GitHub profile avatar for ${profile.login}`;
+      renderStats(profile);
+    }
+
+    async function loadData() {
+      try {
+        const [profileResponse, repoResponse] = await Promise.all([
+          fetch(profileUrl),
+          fetch(repoUrl)
+        ]);
+
+        if (!profileResponse.ok || !repoResponse.ok) {
+          throw new Error("GitHub API request failed");
+        }
+
+        const [profile, repos] = await Promise.all([
+          profileResponse.json(),
+          repoResponse.json()
+        ]);
+
+        allRepos = repos
+          .filter((repo) => !repo.private)
+          .sort((a, b) => new Date(b.pushed_at || b.updated_at) - new Date(a.pushed_at || a.updated_at));
+
+        renderProfile(profile);
+        applyFilter();
+      } catch (error) {
+        elements.repoSummary.textContent = "Unable to load repositories";
+        elements.repoGrid.innerHTML = `
+          <article class="status-card">
+            <strong>Repository data is unavailable right now.</strong>
+            <p>
+              GitHub did not return public repository data. Try refreshing the page, or visit
+              <a href="https://github.com/${username}" target="_blank" rel="noreferrer">@${username}</a>
+              directly.
+            </p>
+          </article>
+        `;
+      }
+    }
+
+    elements.repoSearch.addEventListener("input", applyFilter);
+    loadData();
+  </script>
+</body>
+</html>
