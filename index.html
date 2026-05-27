@@ -628,6 +628,8 @@
     };
 
     let allRepos = [];
+    const releaseMetaByRepo = new Map();
+    let releaseRenderQueued = false;
 
     function formatJoinYear(isoDate) {
       return new Date(isoDate).getFullYear();
@@ -643,6 +645,103 @@
 
     function pluralize(count, singular, plural = `${singular}s`) {
       return `${count} ${count === 1 ? singular : plural}`;
+    }
+
+    function buildReleaseLinks(repo) {
+      const releaseMeta = releaseMetaByRepo.get(repo.full_name);
+      if (!releaseMeta || !releaseMeta.hasReleases) {
+        return "";
+      }
+
+      if (releaseMeta.latestReleaseUrl) {
+        return `<a class="link-pill" href="${releaseMeta.latestReleaseUrl}" target="_blank" rel="noopener noreferrer">Latest release</a>`;
+      }
+
+      return `<a class="link-pill" href="${repo.html_url}/releases" target="_blank" rel="noopener noreferrer">Releases</a>`;
+    }
+
+    function scheduleRepoRender() {
+      if (releaseRenderQueued) {
+        return;
+      }
+
+      releaseRenderQueued = true;
+      requestAnimationFrame(() => {
+        releaseRenderQueued = false;
+        applyFilter();
+      });
+    }
+
+    async function fetchReleaseMeta(repo) {
+      const releasesApiUrl = repo.releases_url.replace("{/id}", "?per_page=1");
+      const latestReleaseApiUrl = repo.releases_url.replace("{/id}", "/latest");
+
+      try {
+        const [releasesResponse, latestReleaseResponse] = await Promise.all([
+          fetch(releasesApiUrl, {
+            headers: {
+              Accept: "application/vnd.github+json"
+            }
+          }),
+          fetch(latestReleaseApiUrl, {
+            headers: {
+              Accept: "application/vnd.github+json"
+            }
+          })
+        ]);
+
+        if (releasesResponse.status === 404) {
+          return { hasReleases: false, latestReleaseUrl: "" };
+        }
+
+        if (!releasesResponse.ok) {
+          throw new Error(`Release lookup failed for ${repo.full_name}`);
+        }
+
+        const releases = await releasesResponse.json();
+        const hasReleases = Array.isArray(releases) && releases.length > 0;
+
+        if (!hasReleases) {
+          return { hasReleases: false, latestReleaseUrl: "" };
+        }
+
+        if (latestReleaseResponse.status === 404) {
+          return { hasReleases: true, latestReleaseUrl: "" };
+        }
+
+        if (!latestReleaseResponse.ok) {
+          throw new Error(`Latest release lookup failed for ${repo.full_name}`);
+        }
+
+        const latestRelease = await latestReleaseResponse.json();
+
+        return {
+          hasReleases: true,
+          latestReleaseUrl: latestRelease.html_url || ""
+        };
+      } catch (error) {
+        return { hasReleases: false, latestReleaseUrl: "" };
+      }
+    }
+
+    async function loadReleaseMetadata(repos) {
+      const pendingRepos = [...repos];
+      const workerCount = Math.min(6, pendingRepos.length);
+
+      async function worker() {
+        while (pendingRepos.length) {
+          const repo = pendingRepos.shift();
+          if (!repo) {
+            return;
+          }
+
+          const releaseMeta = await fetchReleaseMeta(repo);
+          releaseMetaByRepo.set(repo.full_name, releaseMeta);
+          scheduleRepoRender();
+        }
+      }
+
+      await Promise.all(Array.from({ length: workerCount }, worker));
     }
 
     function renderStats(profile) {
@@ -699,6 +798,7 @@
             </div>
             <div class="repo-links">
               <a class="link-pill" href="${repo.html_url}" target="_blank" rel="noopener noreferrer">View repository</a>
+              ${buildReleaseLinks(repo)}
               ${homepageLink}
             </div>
           </article>
@@ -770,6 +870,7 @@
 
         renderProfile(profile);
         applyFilter();
+        loadReleaseMetadata(allRepos);
       } catch (error) {
         elements.repoSummary.textContent = "Unable to load repositories";
         elements.repoGrid.innerHTML = `
