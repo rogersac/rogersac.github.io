@@ -3,11 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>rogersac • GitHub Projects</title>
+  <title>rogersac GitHub Projects | Public Repositories and Experiments</title>
   <meta
     name="description"
-    content="A landing page for rogersac with links to public GitHub repositories."
+    content="Explore rogersac's public GitHub repositories, software experiments, and active projects in one fast GitHub Pages directory."
   >
+  <meta name="author" content="rogersac">
+  <meta
+    name="robots"
+    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+  >
+  <meta
+    name="googlebot"
+    content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+  >
+  <meta name="theme-color" content="#f5efe4">
+  <link rel="canonical" href="https://rogersac.github.io/">
+  <link rel="sitemap" type="application/xml" href="https://rogersac.github.io/sitemap.xml">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="rogersac GitHub Projects">
+  <meta
+    property="og:description"
+    content="Explore rogersac's public GitHub repositories, software experiments, and active projects in one fast GitHub Pages directory."
+  >
+  <meta property="og:url" content="https://rogersac.github.io/">
+  <meta property="og:site_name" content="rogersac GitHub Projects">
+  <meta property="og:image" content="https://avatars.githubusercontent.com/u/19674638?v=4">
+  <meta property="og:image:alt" content="GitHub profile avatar for rogersac">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="rogersac GitHub Projects">
+  <meta
+    name="twitter:description"
+    content="Explore rogersac's public GitHub repositories, software experiments, and active projects in one fast GitHub Pages directory."
+  >
+  <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/19674638?v=4">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://rogersac.github.io/#website",
+          "name": "rogersac GitHub Projects",
+          "url": "https://rogersac.github.io/",
+          "description": "Explore rogersac's public GitHub repositories, software experiments, and active projects in one fast GitHub Pages directory.",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://rogersac.github.io/#person"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://rogersac.github.io/#person",
+          "name": "rogersac",
+          "url": "https://rogersac.github.io/",
+          "sameAs": [
+            "https://github.com/rogersac"
+          ]
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://rogersac.github.io/#webpage",
+          "name": "rogersac GitHub Projects",
+          "url": "https://rogersac.github.io/",
+          "description": "A GitHub Pages landing page listing public repositories, software experiments, and active projects from rogersac.",
+          "isPartOf": {
+            "@id": "https://rogersac.github.io/#website"
+          },
+          "about": {
+            "@id": "https://rogersac.github.io/#person"
+          },
+          "inLanguage": "en-US"
+        }
+      ]
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -459,7 +530,7 @@
             and turns them into a fast directory for code, experiments, and active work.
           </p>
           <div class="hero-actions">
-            <a class="button button-primary" id="profile-link" href="https://github.com/rogersac" target="_blank" rel="noreferrer">
+            <a class="button button-primary" id="profile-link" href="https://github.com/rogersac" target="_blank" rel="noopener noreferrer">
               Open GitHub Profile
             </a>
           </div>
@@ -522,6 +593,16 @@
           <p>Fetching the latest public projects from GitHub.</p>
         </article>
       </div>
+      <noscript>
+        <article class="status-card">
+          <strong>Repository search requires JavaScript.</strong>
+          <p>
+            Browse the public repository list directly on
+            <a href="https://github.com/rogersac?tab=repositories" rel="noopener noreferrer">GitHub</a>
+            if scripts are disabled.
+          </p>
+        </article>
+      </noscript>
     </section>
 
     <footer class="footer">
@@ -595,7 +676,7 @@
       elements.repoGrid.innerHTML = repos.map((repo) => {
         const description = repo.description || "No description provided.";
         const homepageLink = repo.homepage
-          ? `<a class="link-pill" href="${repo.homepage}" target="_blank" rel="noreferrer">Open project site</a>`
+          ? `<a class="link-pill" href="${repo.homepage}" target="_blank" rel="noopener noreferrer">Open project site</a>`
           : "";
         const forkChip = repo.fork ? '<span class="chip">Fork</span>' : "";
         const archivedChip = repo.archived ? '<span class="chip">Archived</span>' : "";
@@ -606,7 +687,7 @@
         return `
           <article class="repo-card">
             <h4>
-              <a href="${repo.html_url}" target="_blank" rel="noreferrer">${repo.name}</a>
+              <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">${repo.name}</a>
             </h4>
             <p class="repo-description">${description}</p>
             <div class="repo-meta">
@@ -617,7 +698,7 @@
               ${archivedChip}
             </div>
             <div class="repo-links">
-              <a class="link-pill" href="${repo.html_url}" target="_blank" rel="noreferrer">View repository</a>
+              <a class="link-pill" href="${repo.html_url}" target="_blank" rel="noopener noreferrer">View repository</a>
               ${homepageLink}
             </div>
           </article>
@@ -696,7 +777,7 @@
             <strong>Repository data is unavailable right now.</strong>
             <p>
               GitHub did not return public repository data. Try refreshing the page, or visit
-              <a href="https://github.com/${username}" target="_blank" rel="noreferrer">@${username}</a>
+              <a href="https://github.com/${username}" target="_blank" rel="noopener noreferrer">@${username}</a>
               directly.
             </p>
           </article>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rogersac.github.io/sitemap.xml
